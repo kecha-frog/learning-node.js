@@ -1,12 +1,27 @@
 {
   "name": "gb_node",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "node index.js from_russia",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "ke4a",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kingslayer-Ke4a/gb_node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kingslayer-Ke4a/gb_node/issues"
+  },
+  "homepage": "https://github.com/kingslayer-Ke4a/gb_node#readme",
+  "description": "",
+  "dependencies": {
+    "colors": "^1.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.31.0"
+  }
 }
