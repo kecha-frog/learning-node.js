@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start_test": "node lesson3/index.js 58-22-3-7-2021 59-22-3-7-2021 ",
+    "start_test": "node lesson3/index.js 12-5-7-2021 14-5-7-2021",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
