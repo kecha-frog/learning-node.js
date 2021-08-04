@@ -14,7 +14,7 @@ const startTimer = (date, name) => {
 const ee = new events.EventEmitter()
 
 ee.on('start_timer', startTimer)
-ee.on('end_timer', (name, idIntervals) => {
+ee.on('end_timer', (idIntervals) => {
   clearInterval(idIntervals)
 })
 
