@@ -2,12 +2,14 @@ const events = require('events')
 
 const startTimer = (date, name) => {
   const idIntervals = setInterval(() => {
-    const time = ((date - Date.now()) / 1000).toFixed()
-    console.log(`[${name}] ${Math.floor(time / (60 * 60))} : ${Math.floor((time / 60) % 60)} : ${Math.floor(time % 60)}`)
+    const seconds = ((date - Date.now()) / 1000).toFixed()
+    const minute = (seconds / 60) % 60
+    const hour = seconds / (60 * 60)
+    console.log(`[${name}] ${Math.floor(hour)} : ${Math.floor(minute)} : ${Math.floor(seconds % 60)}`)
   }, 1000)
 
   setTimeout(() => {
-    ee.emit('end_timer', name, idIntervals)
+    ee.emit('end_timer', idIntervals)
   }, date - Date.now())
 }
 
