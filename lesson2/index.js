@@ -2,6 +2,9 @@ const events = require('events')
 
 const startTimer = (date, name) => {
   const idIntervals = setInterval(() => {
+    if (name === 'timer1') {
+      console.clear()
+    }
     const seconds = ((date - Date.now()) / 1000).toFixed()
     const minute = (seconds / 60) % 60
     const hour = seconds / (60 * 60)
@@ -21,14 +24,14 @@ ee.on('end_timer', (idIntervals) => {
 })
 
 const setTimer = (arg) => {
-  let count = 0
+  let count = 1
 
   for (const argElement of arg) {
     const time = argElement.split('-').reverse()
     const date = new Date(...time)
     const name = `timer${count++}`
 
-    ee.emit('start_timer', date, name)
+    ee.emit('start_timer', date, name, count)
   }
 }
 
