@@ -17,10 +17,15 @@
   "bugs": {
     "url": "https://github.com/kingslayer-Ke4a/gb_node/issues"
   },
+  "bin": {
+    "reader": "lesson4/index.js"
+  },
   "homepage": "https://github.com/kingslayer-Ke4a/gb_node#readme",
   "description": "",
   "dependencies": {
-    "colors": "^1.4.0"
+    "colors": "^1.4.0",
+    "inquirer": "^8.1.2",
+    "yargs": "^17.1.0"
   },
   "devDependencies": {
     "eslint": "^7.31.0",
