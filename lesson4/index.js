@@ -8,13 +8,15 @@ const previousFolder = (lastPath) => {
   questionPath(lastPath)
 }
 
-const findAndWriteStr = (str, path) => {
-  const writeStream = fs.createWriteStream(`C:\\Users\\lllll\\WebstormProjects\\gb_node\\lesson4\\${str}_requests.log`, {
+const findAndWriteStr = (str, pathUser, file) => {
+  const writeFilePath = `${path.join(pathUser, str)}_requests.log`
+  const writeStream = fs.createWriteStream(writeFilePath, {
     flags: 'a',
     encoding: 'utf-8'
-  }) // Не успел сделать путь сохранения файла.
+  })
 
-  const readStream = fs.createReadStream(path, 'UTF-8')
+  const userFilePath = path.join(pathUser, file)
+  const readStream = fs.createReadStream(userFilePath, 'UTF-8')
 
   let count = 0
 
@@ -33,13 +35,16 @@ const findAndWriteStr = (str, path) => {
     console.log(`Найдено строк: ${count}`)
 
     if (count) {
-      writeStream.end(() => console.log('Конец записи файла!'))
+      writeStream.end(() => console.log(`Конец записи файла! ${writeFilePath}`))
+    } else if (!count) {
+      fs.unlink(writeFilePath, err => err ? console.log(err) : console.log('Конец работы программы!.'))
     }
   })
+
   readStream.on('error', (err) => console.log(err))
 }
 
-const questionStr = (path) => {
+const questionStr = (path, file) => {
   console.clear()
 
   inquirer
@@ -50,7 +55,7 @@ const questionStr = (path) => {
     }])
     .then(answer => answer.str)
     .then(str => {
-      findAndWriteStr(str, path)
+      findAndWriteStr(str, path, file)
     })
     .catch(error => console.log(error))
 }
@@ -73,7 +78,7 @@ const questionPath = (answer) => {
     .then(answer => answer.fileName)
     .then(answer => {
       if (answer === up) { // Не смог пофиксить фантомную консоль при выборе трех точек
-        previousFolder('C:\\Users\\lllll\\WebstormProjects\\gb_node\\lesson3') // Не смог придумать как реализовать предыдущую папку
+        previousFolder(lastPath.split('\\').slice(0, -1).join('\\'))
       }
 
       const valuePath = path.join(lastPath, answer)
@@ -81,7 +86,7 @@ const questionPath = (answer) => {
       if (!fs.lstatSync(valuePath).isFile()) {
         questionPath(valuePath)
       } else {
-        questionStr(valuePath)
+        questionStr(lastPath, answer)
       }
     })
     .catch(error => console.log(error.path))
