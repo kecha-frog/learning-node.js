@@ -4,10 +4,6 @@ const fs = require('fs')
 const inquirer = require('inquirer')
 const path = require('path')
 
-const previousFolder = (lastPath) => {
-  questionPath(lastPath)
-}
-
 const findAndWriteStr = (str, pathUser, file) => {
   const writeFilePath = `${path.join(pathUser, str)}_requests.log`
   const writeStream = fs.createWriteStream(writeFilePath, {
@@ -77,16 +73,16 @@ const questionPath = (answer) => {
     }])
     .then(answer => answer.fileName)
     .then(answer => {
-      if (answer === up) { // Не смог пофиксить фантомную консоль при выборе трех точек
-        previousFolder(lastPath.split('\\').slice(0, -1).join('\\'))
-      }
-
-      const valuePath = path.join(lastPath, answer)
-
-      if (!fs.lstatSync(valuePath).isFile()) {
-        questionPath(valuePath)
+      if (answer === up) {
+        questionPath(lastPath.split('\\').slice(0, -1).join('\\'))
       } else {
-        questionStr(lastPath, answer)
+        const valuePath = path.join(lastPath, answer)
+
+        if (!fs.lstatSync(valuePath).isFile()) {
+          questionPath(valuePath)
+        } else {
+          questionStr(lastPath, answer)
+        }
       }
     })
     .catch(error => console.log(error.path))
@@ -99,5 +95,5 @@ inquirer
     message: 'Enter folder path: '
   }])
   .then(answer => answer.path)
-  .then(path => questionPath(path))
   .catch(error => console.log(error))
+  .then(path => questionPath(path))
