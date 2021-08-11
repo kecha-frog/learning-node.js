@@ -74,7 +74,7 @@ const questionPath = (answer) => {
     .then(answer => answer.fileName)
     .then(answer => {
       if (answer === up) {
-        questionPath(lastPath.split('\\').slice(0, -1).join('\\'))
+        questionPath(lastPath.substring(0, lastPath.lastIndexOf('\\')))
       } else {
         const valuePath = path.join(lastPath, answer)
 
