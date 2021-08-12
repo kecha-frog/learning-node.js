@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 const path = require('path')
 const fs = require('fs')
 const http = require('http')
@@ -16,10 +15,11 @@ const createLink = (pathDir, value) => {
 const server = http.createServer((req, res) => {
   const currentDirection = 'C:\\Users\\lllll\\WebstormProjects\\gb_node'
   const dirLink = fs.readdirSync(currentDirection).reverse()
-  const { typeFile, nameFile } = url.parse(req.url, true).query
+  const { type, name } = url.parse(req.url, true).query
+  console.log(type, name)
 
-  if (typeFile === 'file') {
-    const readStream = fs.createReadStream(path.join(currentDirection, nameFile), { encoding: 'utf8' })
+  if (type === 'file') {
+    const readStream = fs.createReadStream(path.join(currentDirection, name), { encoding: 'utf8' })
     readStream.on('data', chunk => res.write(chunk))
     readStream.on('end', () => res.end())
   } else {
@@ -28,6 +28,7 @@ const server = http.createServer((req, res) => {
     })
 
     dirLink.map(value => res.write(createLink(currentDirection, value)))
+    res.end()
   }
 })
 
