@@ -5,6 +5,8 @@ const url = require('url')
 
 let currentDirection = process.cwd()
 
+console.log('http://localhost:3000/')
+
 const isFile = (pathDir, value) => {
   return fs.lstatSync(path.join(pathDir, value)).isFile()
 }
