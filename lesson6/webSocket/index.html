@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
+</head>
+<body>
+<label for="input">My nickname: <span id="label"></span></label>
+<br>
+<input type="text" id="input" autofocus>
+<input type="button" id="button" value="Send">
+<div id="online"></div>
+<div id="messages"></div>
+
+<script type="text/javascript">
+   const socket = io('localhost:3000')
+
+    socket.on("connect", () => {
+      console.log('Successful connected to server')
+    })
+
+   socket.on("SERVER_RENDER_NICKNAME", (data) => {
+       document.querySelector("#label").innerHTML  = data.nickname
+   })
+
+   socket.on("SERVER_NETWORK", (data) => {
+       if (data.online){
+           console.log(`Client "${data.nickname}" connect`)
+       }else {
+           console.log(`Client "${data.nickname}" disconnect`)
+       }
+   })
+
+    socket.on("SERVER_MSG", data =>{
+      const span = document.createElement('span')
+      span.innerHTML = `${data.nickname}: \n ${data.message}`
+
+      const br = document.createElement("br")
+
+
+      document.querySelector("#messages").append(span)
+      document.querySelector("#messages").append(br)
+    })
+
+    document.querySelector("#button").onclick = () => {
+      const text = document.querySelector("#input").value
+
+      socket.emit('CLIENT_MSG', {message: text})
+    }
+
+</script>
+</body>
+</html>
