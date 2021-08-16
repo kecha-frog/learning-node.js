@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        li {
+            list-style-type: none;
+        }
+        ul {
+            padding-left: 0;
+        }
+    </style>
+    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js"
+            integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg"
+            crossOrigin="anonymous"></script>
+</head>
+<body>
+<h3 id="countUser"></h3>
+<ul>#app</ul>
+<script type="text/javascript">
+    const socket = io('localhost:3000')
+
+    socket.on("connect", () => {
+        console.log('Successful connected to server')
+    })
+
+    socket.on("Count_user", (data) => {
+        document.querySelector("#countUser").innerText = `Количество комнат: ${data.countRoom}`
+    })
+</script>
+</body>
+</html>
